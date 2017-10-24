@@ -17,51 +17,85 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'PvLogin' => '',
-            'PvPassword' => '',
-            'PvAPIKey' => '',
-            'PvToken' => '',
+            'pvLogin' => '',
+            'pvPassword' => '',
+            'pvAPIKey' => '',
+            'pvToken' => '',
+            'merchantPayeeCode' => '',
+            'liveWsdl' => 'https://portal.paymentvision.com/api/api.asmx?wsdl',
+            'testWsdl' => 'https://pvdemo.autoscribe.com/API/API.asmx?wsdl',
+            'testMode' => false
         );
     }
 
     public function getPvLogin()
     {
-        return $this->getParameter('PvLogin');
+        return $this->getParameter('pvLogin');
     }
 
     public function setPvLogin($value)
     {
-        return $this->setParameter('PvLogin', $value);
+        return $this->setParameter('pvLogin', $value);
     }
 
     public function getPvPassword()
     {
-        return $this->getParameter('PvPassword');
+        return $this->getParameter('pvPassword');
     }
 
     public function setPvPassword($value)
     {
-        return $this->setParameter('PvPassword', $value);
+        return $this->setParameter('pvPassword', $value);
     }
 
     public function getPvAPIKey()
     {
-        return $this->getParameter('PvAPIKey');
+        return $this->getParameter('pvAPIKey');
     }
 
     public function setPvAPIKey($value)
     {
-        return $this->setParameter('PvAPIKey', $value);
+        return $this->setParameter('pvAPIKey', $value);
     }
 
     public function getPvToken()
     {
-        return $this->getParameter('PvToken');
+        return $this->getParameter('pvToken');
     }
 
     public function setPvToken($value)
     {
-        return $this->setParameter('PvToken', $value);
+        return $this->setParameter('pvToken', $value);
+    }
+
+    public function getMerchantPayeeCode()
+    {
+        return $this->getParameter('merchantPayeeCode');
+    }
+
+    public function setMerchantPayeeCode($value)
+    {
+        return $this->setParameter('merchantPayeeCode', $value);
+    }
+
+    public function getLiveWsdl()
+    {
+        return $this->getParameter('liveWsdl');
+    }
+
+    public function setLiveWsdl($value)
+    {
+        return $this->setParameter('liveWsdl', $value);
+    }
+
+    public function getTestWsdl()
+    {
+        return $this->getParameter('testWsdl');
+    }
+
+    public function setTestWsdl($value)
+    {
+        return $this->setParameter('testWsdl', $value);
     }
 
     public function purchase(array $parameters = array())
