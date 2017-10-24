@@ -1,16 +1,16 @@
 {
-    "name": "RTONational/omnipay-paymentvision",
+    "name": "RTON/omnipay-paymentvision",
     "description": "PaymentVision driver for the Omnipay payment processing library",
     "type": "library",
-    "autoload": {
-    	"psr-4": {
-    		"RTONational\\omnipay-paymentvision\\": "src"
-    	}
-    },
     "require": {
     	"omnipay/common": "~2.0"
     },
     "require-dev": {
     	"omnipay/tests": "~2.0"
-    }
+    },
+    "autoload": {
+        "psr-4": {
+            "RTON\\omnipay-paymentvision\\": "src"
+        }
+    },
 }
