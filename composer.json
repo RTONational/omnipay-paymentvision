@@ -2,6 +2,11 @@
     "name": "rtonational/omnipay-paymentvision",
     "description": "PaymentVision driver for the Omnipay payment processing library",
     "type": "library",
+    "autoload": {
+    	"psr-4": {
+    		"rtonational\\omnipay-paymentvision\\": "src"
+    	}
+    },
     "require": {
     	"omnipay/common": "~2.0"
     },
