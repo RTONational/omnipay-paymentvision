@@ -24,6 +24,7 @@ class Gateway extends AbstractGateway
             'merchantPayeeCode' => '',
             'liveWsdl' => 'https://portal.paymentvision.com/api/api.asmx?wsdl',
             'testWsdl' => 'https://pvdemo.autoscribe.com/API/API.asmx?wsdl',
+            'holdForApproval' => false,
             'testMode' => false
         );
     }
@@ -96,6 +97,16 @@ class Gateway extends AbstractGateway
     public function setTestWsdl($value)
     {
         return $this->setParameter('testWsdl', $value);
+    }
+
+    public function getHoldForApproval()
+    {
+        return $this->getParameter('holdForApproval');
+    }
+
+    public function setHoldForApproval($value)
+    {
+        return $this->setParameter('holdForApproval', $value);
     }
 
     public function purchase(array $parameters = array())
