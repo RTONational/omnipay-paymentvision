@@ -3,9 +3,65 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CreditCardHelper;
 
 class PurchaseRequest extends AbstractRequest
 {
+    /**
+     * SoapClient Class
+     */
+    private $soap = null;
+
+    public function getPvLogin()
+    {
+        return $this->getParameter('pvLogin');
+    }
+
+    public function setPvLogin($value)
+    {
+        return $this->setParameter('pvLogin', $value);
+    }
+
+    public function getPvPassword()
+    {
+        return $this->getParameter('pvPassword');
+    }
+
+    public function setPvPassword($value)
+    {
+        return $this->setParameter('pvPassword', $value);
+    }
+
+    public function getPvAPIKey()
+    {
+        return $this->getParameter('pvAPIKey');
+    }
+
+    public function setPvAPIKey($value)
+    {
+        return $this->setParameter('pvAPIKey', $value);
+    }
+
+    public function getPvToken()
+    {
+        return $this->getParameter('pvToken');
+    }
+
+    public function setPvToken($value)
+    {
+        return $this->setParameter('pvToken', $value);
+    }
+
+    public function getMerchantPayeeCode()
+    {
+        return $this->getParameter('merchantPayeeCode');
+    }
+
+    public function setMerchantPayeeCode($value)
+    {
+        return $this->setParameter('merchantPayeeCode', $value);
+    }
+
     public function getComment()
     {
         return $this->getParameter('comment');
@@ -24,6 +80,16 @@ class PurchaseRequest extends AbstractRequest
     public function setUserDefinedOne($value)
     {
         return $this->setParameter('userDefinedOne', $value);
+    }
+
+    public function getHoldForApproval()
+    {
+        return $this->getParameter('holdForApproval');
+    }
+
+    public function setHoldForApproval($value)
+    {
+        return $this->setParameter('holdForApproval', $value);
     }
 
     public function getLiveWsdl()
@@ -62,21 +128,22 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('amount', 'card');
         /** @var CreditCard $card */
         $card = $this->getCard();
+        $card->validate();
 
         $data = array();
 
         $data['authentication'] = $this->getAuthenticationParams();
 
-        $data['creditCardAccount'] = [
+        $data['creditCardAccount'] = array(
             'CreditCardNumber' => $card->getNumber(),
-            'CreditCardExpirationMonth' => $card->getExpirationMonth(),
-            'CreditCardExpirationYear' => $card->getExpirationYear(),
+            'CreditCardExpirationMonth' => $card->getExpiryMonth(),
+            'CreditCardExpirationYear' => $card->getExpiryYear(),
             'CVVCode' => $card->getCvv(),
-            'CardType' => $card->getBrand(),
-        ];
+            'CardType' => CreditCardHelper::paymentVisionCardType($card->getBrand()),
+        );
 
         $data['creditCardPayment'] = array(
-            'MerchantPayeeCode' => $this->getMerchantPayeeCode(), // set in params
+            'MerchantPayeeCode' => $this->getMerchantPayeeCode(),
             'Amount' => $this->getAmount(),
             'Comment' => $this->getComment(), // Rent-To-Own Deposit
             'UserDefinedOne' => $this->getUserDefinedOne(), // $this->data['Customer']['name'],
@@ -114,30 +181,30 @@ class PurchaseRequest extends AbstractRequest
      * Initialize request with parameters
      * @param array $parameters The parameters to send
      */
-    public function initialize(array $parameters = array())
-    {
+    // public function initialize(array $parameters = array())
+    // {
 
-    }
+    // }
 
     /**
      * Get all request parameters
      *
      * @return array
      */
-    public function getParameters()
-    {
+    // public function getParameters()
+    // {
 
-    }
+    // }
 
     /**
      * Get the response to this request (if the request has been sent)
      *
      * @return ResponseInterface
      */
-    public function getResponse()
-    {
+    // public function getResponse()
+    // {
 
-    }
+    // }
 
     /**
      * Send the request
@@ -158,7 +225,7 @@ class PurchaseRequest extends AbstractRequest
     public function sendData($data)
     {
         if (!$this->soap) {
-            $this->soap = new SoapClient($this->wsdl);
+            $this->soap = new \SoapClient($this->getWsdl());
         }
         
         $response = call_user_func_array(array($this->soap, 'MakeCreditCardPayment'), array($data));
