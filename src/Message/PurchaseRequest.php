@@ -136,7 +136,7 @@ class PurchaseRequest extends AbstractRequest
 
         $data['creditCardAccount'] = array(
             'CreditCardNumber' => $card->getNumber(),
-            'CreditCardExpirationMonth' => $card->getExpiryMonth(),
+            'CreditCardExpirationMonth' => CreditCardHelper::formatExpiryMonth($card->getExpiryMonth()),
             'CreditCardExpirationYear' => $card->getExpiryYear(),
             'CVVCode' => $card->getCvv(),
             'CardType' => CreditCardHelper::paymentVisionCardType($card->getBrand()),
@@ -145,9 +145,9 @@ class PurchaseRequest extends AbstractRequest
         $data['creditCardPayment'] = array(
             'MerchantPayeeCode' => $this->getMerchantPayeeCode(),
             'Amount' => $this->getAmount(),
-            'Comment' => $this->getComment(), // Rent-To-Own Deposit
-            'UserDefinedOne' => $this->getUserDefinedOne(), // $this->data['Customer']['name'],
-            'HoldForApproval' => $this->getHoldForApproval(), // false
+            'Comment' => $this->getComment(),
+            'UserDefinedOne' => $this->getUserDefinedOne(),
+            'HoldForApproval' => $this->getHoldForApproval(),
         );
         
         $data['customer'] = array(

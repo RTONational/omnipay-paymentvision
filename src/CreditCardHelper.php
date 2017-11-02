@@ -43,4 +43,15 @@ class CreditCardHelper
 
         return self::BRAND_UNKNOWN;
     }
+
+    /**
+     * Returns the given expiryMonth as a 2-character length string with a zero padded left.
+     *
+     * @param  int  $expirMonth The expiration month returned from CreditCard->getExpiryMonth()
+     * @return string example: 1 -> '01' (January)
+     */
+    public static function formatExpiryMonth($expiryMonth)
+    {
+        return str_pad($expiryMonth, 2, '0', STR_PAD_LEFT);
+    }
 }
