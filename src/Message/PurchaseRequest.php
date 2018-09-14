@@ -92,6 +92,16 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('holdForApproval', $value);
     }
 
+    public function getIsRecurring()
+    {
+        return $this->getParameter('isRecurring');
+    }
+
+    public function setIsRecurring($value)
+    {
+        return $this->setParameter('isRecurring', $value);
+    }
+
     public function getLiveWsdl()
     {
         return $this->getParameter('liveWsdl');
@@ -148,6 +158,7 @@ class PurchaseRequest extends AbstractRequest
             'Comment' => $this->getComment(),
             'UserDefinedOne' => $this->getUserDefinedOne(),
             'HoldForApproval' => $this->getHoldForApproval(),
+            'IsRecurring' => $this->getIsRecurring(),
         );
         
         $data['customer'] = array(

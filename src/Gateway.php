@@ -25,6 +25,7 @@ class Gateway extends AbstractGateway
             'liveWsdl' => 'https://portal.paymentvision.com/api/api.asmx?wsdl',
             'testWsdl' => 'https://pvdemo.autoscribe.com/API/API.asmx?wsdl',
             'holdForApproval' => false,
+            'isRecurring' => false,
             'testMode' => false
         );
     }
