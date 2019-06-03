@@ -1,5 +1,5 @@
 {
-    "name": "RTON/omnipay-paymentvision",
+    "name": "rton/omnipay-paymentvision",
     "description": "PaymentVision driver for the Omnipay payment processing library",
     "type": "library",
     "require": {
