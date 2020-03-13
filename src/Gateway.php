@@ -30,6 +30,16 @@ class Gateway extends AbstractGateway
         );
     }
 
+    public function getSessionId()
+    {
+        return $this->getParameter('sessionId');
+    }
+
+    public function setSessionId($value)
+    {
+        return $this->setParameter('sessionId', $value);
+    }
+
     public function getPvLogin()
     {
         return $this->getParameter('pvLogin');
@@ -110,9 +120,19 @@ class Gateway extends AbstractGateway
         return $this->setParameter('holdForApproval', $value);
     }
 
+    public function login(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\LoginRequest', $parameters);
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PaymentVision\Message\PurchaseRequest', $parameters);
+    }
+
+    public function getTransactionDetails(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\TransactionDetailsRequest', $parameters);
     }
 
     public function refund(array $parameters = array())

@@ -80,4 +80,20 @@ class Response extends AbstractResponse
 
         return $transactionReference;
     }
+
+    /**
+     * Session ID
+     *
+     * @return null|string A session id for authenticating multiple requests
+     */
+    public function getSessionId()
+    {
+        // response code 1000 is success and returns new session id
+		// response code 1012 is error, "user already logged in", and returns current session id
+		if (in_array($this->getCode(), array('1000', '1012'))) {
+			return $this->getData()['LoginResult']['SessionID'];
+        }
+
+        return null;
+    }
 }
