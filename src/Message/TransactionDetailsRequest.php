@@ -89,7 +89,7 @@ class TransactionDetailsRequest extends AbstractRequest
     public function sendData($data)
     {
         if (!$this->soap) {
-            $this->soap = new \SoapClient($this->getWsdl());
+            $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
         }
         
         $response = call_user_func_array(array($this->soap, 'GetTransactionDetails'), array($data));
