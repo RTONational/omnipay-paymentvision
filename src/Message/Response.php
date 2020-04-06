@@ -96,4 +96,24 @@ class Response extends AbstractResponse
 
         return null;
     }
+
+    /**
+     * Soap Request
+     *
+     * @return string — The last SOAP request, as an XML string.
+     */
+    public function getSoapRequest()
+    {
+        return $this->request->soap->__getLastRequest();
+    }
+
+    /**
+     * Soap Response
+     *
+     * @return string — The last SOAP response, as an XML string.
+     */
+    public function getSoapResponse()
+    {
+        return $this->request->soap->__getLastResponse();
+    }
 }
