@@ -134,6 +134,15 @@ class Gateway extends AbstractGateway
     }
 
     /***
+     * One-time bank account transactions
+     */
+
+    public function purchaseViaBank(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\PurchaseViaBankRequest', $parameters);
+    }
+
+    /***
      * One-time credit card transactions
      */
 
