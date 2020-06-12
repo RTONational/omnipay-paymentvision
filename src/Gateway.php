@@ -14,6 +14,10 @@ class Gateway extends AbstractGateway
         return 'PaymentVision';
     }
 
+    /***
+     * Parameter getters and setters
+     */
+
     public function getDefaultParameters()
     {
         return array(
@@ -120,10 +124,18 @@ class Gateway extends AbstractGateway
         return $this->setParameter('holdForApproval', $value);
     }
 
+    /***
+     * Request methods
+     */
+
     public function login(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PaymentVision\Message\LoginRequest', $parameters);
     }
+
+    /***
+     * One-time credit card transactions
+     */
 
     public function purchase(array $parameters = array())
     {
@@ -143,5 +155,58 @@ class Gateway extends AbstractGateway
     public function void(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PaymentVision\Message\VoidRequest', $parameters);
+    }
+
+    /***
+     * Saved bank account transactions
+     */
+
+    public function createBankAccount(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\CreateBankAccountRequest', $parameters);
+    }
+
+    public function updateBankAccount(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\UpdateBankAccountRequest', $parameters);
+    }
+
+    public function deleteBankAccount(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\DeleteBankAccountRequest', $parameters);
+    }
+
+    public function chargeBankAccount(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\ChargeBankAccountRequest', $parameters);
+    }
+
+    /***
+     * Saved credit card account transactions
+     */
+
+    public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\CreateCardRequest', $parameters);
+    }
+
+    public function updateCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\UpdateCardRequest', $parameters);
+    }
+
+    public function deleteCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\DeleteCardRequest', $parameters);
+    }
+
+    public function chargeCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\ChargeCardRequest', $parameters);
+    }
+
+    public function financialAccounts(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\FinancialAccountsRequest', $parameters);
     }
 }
