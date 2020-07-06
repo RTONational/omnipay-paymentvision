@@ -104,7 +104,7 @@ class Response extends AbstractResponse
      */
     public function getSoapRequest()
     {
-        return $this->request->soap->__getLastRequest();
+        return $this->request->getSoap()->__getLastRequest();
     }
 
     /**
@@ -114,6 +114,6 @@ class Response extends AbstractResponse
      */
     public function getSoapResponse()
     {
-        return $this->request->soap->__getLastResponse();
+        return $this->request->getSoap()->__getLastResponse();
     }
 }
