@@ -12,7 +12,12 @@ class FinancialAccountsRequest extends AbstractRequest
     /**
      * SoapClient Class
      */
-    public $soap = null;
+    private $soap = null;
+
+    public function getSoap()
+    {
+        return $this->soap;
+    }
 
     public function getSessionId()
     {

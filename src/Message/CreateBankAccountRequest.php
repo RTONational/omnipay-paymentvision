@@ -11,6 +11,11 @@ class CreateBankAccountRequest extends AbstractRequest
      */
     private $soap = null;
 
+    public function getSoap()
+    {
+        return $this->soap;
+    }
+
     public function getPvLogin()
     {
         return $this->getParameter('pvLogin');
