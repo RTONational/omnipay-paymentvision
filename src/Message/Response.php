@@ -64,21 +64,21 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Gateway Reference
+     * Gateway Transaction Id
      *
-     * @return null|string A reference provided by PaymentVision to represent this transaction
+     * @return null|string An id provided by PaymentVision to represent this transaction
      */
-    public function getTransactionReference()
+    public function getTransactionId()
     {
-        $transactionReference = null;
+        $transactionId = null;
 
-        array_walk_recursive($this->data, function ($val, $key) use (&$transactionReference) {
+        array_walk_recursive($this->data, function ($val, $key) use (&$transactionId) {
             if ($key == 'TransactionReferenceCode') {
-                $transactionReference = $val;
+                $transactionId = $val;
             }
         });
 
-        return $transactionReference;
+        return $transactionId;
     }
 
     /**
