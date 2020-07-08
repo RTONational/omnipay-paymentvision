@@ -82,6 +82,24 @@ class Response extends AbstractResponse
     }
 
     /**
+     * Gateway Reference Id
+     *
+     * @return null|string A reference id provided by PaymentVision to represent an account
+     */
+    public function getReferenceId()
+    {
+        $referenceId = null;
+
+        array_walk_recursive($this->data, function ($val, $key) use (&$referenceId) {
+            if ($key == 'ReferenceID') {
+                $referenceId = $val;
+            }
+        });
+
+        return $referenceId;
+    }
+
+    /**
      * Session ID
      *
      * @return null|string A session id for authenticating multiple requests
