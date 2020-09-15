@@ -218,4 +218,13 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\PaymentVision\Message\FinancialAccountsRequest', $parameters);
     }
+
+    /***
+     * Saved customer account transactions
+     */
+
+    public function updateCustomer(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PaymentVision\Message\UpdateCustomerRequest', $parameters);
+    }
 }
