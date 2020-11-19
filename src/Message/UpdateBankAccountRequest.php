@@ -173,9 +173,9 @@ class UpdateBankAccountRequest extends AbstractRequest
 
         $data = array();
 
-        $data['sessionId'] = $this->getSessionId();
+        $data['sessionID'] = $this->getSessionId();
 
-        $data['referenceId'] = $this->getReferenceId();
+        $data['referenceID'] = $this->getReferenceId();
 
         $data['bankAccountUpdates'] = array(
 			'AccountType' => $this->getType(),
