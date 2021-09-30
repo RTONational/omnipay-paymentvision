@@ -27,7 +27,7 @@ class Gateway extends AbstractGateway
             'pvToken' => '',
             'merchantPayeeCode' => '',
             'liveWsdl' => 'https://portal.paymentvision.com/api/api.asmx?wsdl',
-            'testWsdl' => 'https://pvdemo.autoscribe.com/API/API.asmx?wsdl',
+            'testWsdl' => 'https://demo-portal.paymentvision.com/api/api.asmx?wsdl',
             'holdForApproval' => false,
             'isRecurring' => false,
             'testMode' => false
