@@ -299,7 +299,7 @@ class PurchaseViaBankRequest extends AbstractRequest
         $data['achPayment'] = array(
             'Amount' => $this->getAmount(),
             'Comment' => $this->getComment(),
-            'UserDefinedOne' => $this->getUserDefinedOne(),
+            'UserDefinedOne' => substr($this->getUserDefinedOne(), 0, 50),
             'SecCode' => 'WEB',
             'MerchantPayeeCode' => $this->getMerchantPayeeCode(),
             'HoldForApproval' => $this->getHoldForApproval(),

@@ -161,7 +161,7 @@ class PurchaseRequest extends AbstractRequest
             'MerchantPayeeCode' => $this->getMerchantPayeeCode(),
             'Amount' => $this->getAmount(),
             'Comment' => $this->getComment(),
-            'UserDefinedOne' => $this->getUserDefinedOne(),
+            'UserDefinedOne' => substr($this->getUserDefinedOne(), 0, 50),
             'HoldForApproval' => $this->getHoldForApproval(),
             'IsRecurring' => $this->getIsRecurring(),
         );

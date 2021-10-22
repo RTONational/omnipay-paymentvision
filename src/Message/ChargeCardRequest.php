@@ -172,7 +172,7 @@ class ChargeCardRequest extends AbstractRequest
         $data['creditCardPayment'] = array(
             'Amount' => $this->getAmount(),
             'Comment' => $this->getComment(),
-            'UserDefinedOne' => $this->getUserDefinedOne(),
+            'UserDefinedOne' => substr($this->getUserDefinedOne(), 0, 50),
             'MerchantPayeeCode' => $this->getMerchantPayeeCode(),
             'HoldForApproval' => $this->getHoldForApproval(),
             'IsRecurring' => $this->getIsRecurring(),
