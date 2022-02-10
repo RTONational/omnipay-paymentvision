@@ -3,9 +3,12 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CommonParametersTrait;
 
 class DeleteBankAccountRequest extends AbstractRequest
 {
+    use CommonParametersTrait;
+
     /**
      * SoapClient Class
      */
@@ -14,51 +17,6 @@ class DeleteBankAccountRequest extends AbstractRequest
     public function getSoap()
     {
         return $this->soap;
-    }
-
-    public function getSessionId()
-    {
-        return $this->getParameter('sessionId');
-    }
-
-    public function setSessionId($value)
-    {
-        return $this->setParameter('sessionId', $value);
-    }
-
-    public function getReferenceId()
-    {
-        return $this->getParameter('referenceId');
-    }
-
-    public function setReferenceId($value)
-    {
-        return $this->setParameter('referenceId', $value);
-    }
-
-    public function getLiveWsdl()
-    {
-        return $this->getParameter('liveWsdl');
-    }
-
-    public function setLiveWsdl($value)
-    {
-        return $this->setParameter('liveWsdl', $value);
-    }
-
-    public function getTestWsdl()
-    {
-        return $this->getParameter('testWsdl');
-    }
-
-    public function setTestWsdl($value)
-    {
-        return $this->setParameter('testWsdl', $value);
-    }
-
-    public function getWsdl()
-    {
-        return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
     /**

@@ -3,9 +3,12 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CommonParametersTrait;
 
 class UpdateBankAccountRequest extends AbstractRequest
 {
+    use CommonParametersTrait;
+
     /**
      * SoapClient Class
      */
@@ -14,151 +17,6 @@ class UpdateBankAccountRequest extends AbstractRequest
     public function getSoap()
     {
         return $this->soap;
-    }
-
-    public function getSessionId()
-    {
-        return $this->getParameter('sessionId');
-    }
-
-    public function setSessionId($value)
-    {
-        return $this->setParameter('sessionId', $value);
-    }
-
-    public function getReferenceId()
-    {
-        return $this->getParameter('referenceId');
-    }
-
-    public function setReferenceId($value)
-    {
-        return $this->setParameter('referenceId', $value);
-    }
-
-    public function getType()
-    {
-        return $this->getParameter('type');
-    }
-
-    public function setType($value)
-    {
-        return $this->setParameter('type', $value);
-    }
-
-    public function getNameOnAccount()
-    {
-        return $this->getParameter('nameOnAccount');
-    }
-
-    public function setNameOnAccount($value)
-    {
-        return $this->setParameter('nameOnAccount', $value);
-    }
-
-    public function getFirstName()
-    {
-        return $this->getParameter('firstName');
-    }
-
-    public function setFirstName($value)
-    {
-        return $this->setParameter('firstName', $value);
-    }
-
-    public function getLastName()
-    {
-        return $this->getParameter('lastName');
-    }
-
-    public function setLastName($value)
-    {
-        return $this->setParameter('lastName', $value);
-    }
-
-    public function getBillingAddress1()
-    {
-        return $this->getParameter('billingAddress1');
-    }
-
-    public function setBillingAddress1($value)
-    {
-        return $this->setParameter('billingAddress1', $value);
-    }
-
-    public function getBillingCity()
-    {
-        return $this->getParameter('billingCity');
-    }
-
-    public function setBillingCity($value)
-    {
-        return $this->setParameter('billingCity', $value);
-    }
-
-    public function getBillingState()
-    {
-        return $this->getParameter('billingState');
-    }
-
-    public function setBillingState($value)
-    {
-        return $this->setParameter('billingState', $value);
-    }
-
-    public function getBillingPostcode()
-    {
-        return $this->getParameter('billingPostcode');
-    }
-
-    public function setBillingPostcode($value)
-    {
-        return $this->setParameter('billingPostcode', $value);
-    }
-
-    public function getBillingPhone()
-    {
-        return $this->getParameter('billingPhone');
-    }
-
-    public function setBillingPhone($value)
-    {
-        return $this->setParameter('billingPhone', $value);
-    }
-
-    public function getCustomerReferenceCode()
-    {
-        return $this->getParameter('customerReferenceCode');
-    }
-
-    public function setCustomerReferenceCode($value)
-    {
-        return $this->setParameter('customerReferenceCode', $value);
-    }
-
-    public function getLiveWsdl()
-    {
-        return $this->getParameter('liveWsdl');
-    }
-
-    public function setLiveWsdl($value)
-    {
-        return $this->setParameter('liveWsdl', $value);
-    }
-
-    public function getTestWsdl()
-    {
-        return $this->getParameter('testWsdl');
-    }
-
-    public function setTestWsdl($value)
-    {
-        return $this->setParameter('testWsdl', $value);
-    }
-
-    public function getWsdl()
-    {
-        return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
     /**

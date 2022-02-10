@@ -3,12 +3,15 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CommonParametersTrait;
 
 /**
  * Send a request for voiding a transaction
  */
 class VoidRequest extends AbstractRequest
 {
+    use CommonParametersTrait;
+
     /**
      * SoapClient Class
      */
@@ -17,61 +20,6 @@ class VoidRequest extends AbstractRequest
     public function getSoap()
     {
         return $this->soap;
-    }
-
-    public function getSessionId()
-    {
-        return $this->getParameter('sessionId');
-    }
-
-    public function setSessionId($value)
-    {
-        return $this->setParameter('sessionId', $value);
-    }
-
-    public function getExternalRequestId()
-    {
-        return $this->getParameter('externalRequestId');
-    }
-
-    public function setExternalRequestId($value)
-    {
-        return $this->setParameter('externalRequestId', $value);
-    }
-
-    public function getRefundReason()
-    {
-        return $this->getParameter('refundReason');
-    }
-
-    public function setRefundReason($value)
-    {
-        return $this->setParameter('refundReason', $value);
-    }
-
-    public function getLiveWsdl()
-    {
-        return $this->getParameter('liveWsdl');
-    }
-
-    public function setLiveWsdl($value)
-    {
-        return $this->setParameter('liveWsdl', $value);
-    }
-
-    public function getTestWsdl()
-    {
-        return $this->getParameter('testWsdl');
-    }
-
-    public function setTestWsdl($value)
-    {
-        return $this->setParameter('testWsdl', $value);
-    }
-
-    public function getWsdl()
-    {
-        return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
     /**

@@ -3,12 +3,15 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CommonParametersTrait;
 
 /**
  * Send a request for details of a single transaction specified by transaction reference code
  */
 class FinancialAccountsRequest extends AbstractRequest
 {
+    use CommonParametersTrait;
+
     /**
      * SoapClient Class
      */
@@ -17,51 +20,6 @@ class FinancialAccountsRequest extends AbstractRequest
     public function getSoap()
     {
         return $this->soap;
-    }
-
-    public function getSessionId()
-    {
-        return $this->getParameter('sessionId');
-    }
-
-    public function setSessionId($value)
-    {
-        return $this->setParameter('sessionId', $value);
-    }
-
-    public function getCustomerReferenceCode()
-    {
-        return $this->getParameter('customerReferenceCode');
-    }
-
-    public function setCustomerReferenceCode($value)
-    {
-        return $this->setParameter('customerReferenceCode', $value);
-    }
-
-    public function getLiveWsdl()
-    {
-        return $this->getParameter('liveWsdl');
-    }
-
-    public function setLiveWsdl($value)
-    {
-        return $this->setParameter('liveWsdl', $value);
-    }
-
-    public function getTestWsdl()
-    {
-        return $this->getParameter('testWsdl');
-    }
-
-    public function setTestWsdl($value)
-    {
-        return $this->setParameter('testWsdl', $value);
-    }
-
-    public function getWsdl()
-    {
-        return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
     /**
