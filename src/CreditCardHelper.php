@@ -21,7 +21,7 @@ class CreditCardHelper
      * Array mapping card brand name returned from CreditCard->getBrand() to
      * the corresponding name that PaymentVision accepts.
      */
-    protected $supportedCards = [
+    protected static $supportedCards = [
         'visa' => self::BRAND_VISA,
         'mastercard' => self::BRAND_MASTERCARD,
         'discover' => self::BRAND_DISCOVER,
@@ -37,8 +37,8 @@ class CreditCardHelper
      */
     public static function paymentVisionCardType($creditCardBrand)
     {
-        if (isset($supportedCards[$creditCardBrand])) {
-            return $supportedCards[$creditCardBrand];
+        if (isset(self::$supportedCards[$creditCardBrand])) {
+            return self::$supportedCards[$creditCardBrand];
         }
 
         return self::BRAND_UNKNOWN;
