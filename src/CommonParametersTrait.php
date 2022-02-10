@@ -79,6 +79,16 @@ trait CommonParametersTrait
         return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
+    public function getStubMode()
+    {
+        return $this->getParameter('stubMode');
+    }
+
+    public function setStubMode($value)
+    {
+        return $this->setParameter('stubMode', $value);
+    }
+
     public function getReferenceId()
     {
         return $this->getParameter('referenceId');

@@ -32,7 +32,8 @@ class Gateway extends AbstractGateway
             'testWsdl' => 'https://demo-portal.paymentvision.com/api/api.asmx?wsdl',
             'holdForApproval' => false,
             'isRecurring' => false,
-            'testMode' => false
+            'testMode' => false,
+            'stubMode' => false
         );
     }
 
