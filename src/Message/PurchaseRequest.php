@@ -128,6 +128,11 @@ class PurchaseRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        if (true === $this->getStubMode()) {
+            $response = $this->getFakeResponse($data);
+            return $this->response = new FakeResponse($this, $response);
+        }
+
         if (!$this->soap) {
             $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
         }
@@ -135,5 +140,48 @@ class PurchaseRequest extends AbstractRequest
         $response = call_user_func_array(array($this->soap, 'MakeCreditCardPayment'), array($data));
 
         return $this->response = new Response($this, $response);
+    }
+
+    /**
+     * Get fake response specific to this request
+     *
+     * @param  mixed $data The data that would otherwise be sent
+     * @return object
+     */
+    public function getFakeResponse($data)
+    {
+        $dateString = date('YmdHis');
+        return (object) [
+            'MakeCreditCardPaymentResult' => [
+                'ReferenceID' => 'C' . $dateString,
+                'TimeReceived' => date('n/j/Y g:i:s A'),
+                'TransactionStatus' => 'Processed',
+                'CaptureTrackingNumber' => 'API' . $dateString,
+                'TransactionReferenceCode' => 'STUB' . $dateString,
+                'CustomerReferenceCode' => 'CU' . $dateString,
+                'Amount' => $data['creditCardPayment']['Amount'],
+                'PrincipalAmount' => $data['creditCardPayment']['Amount'],
+                'ConvenienceFee' => '0.00',
+                'CVVResponse' => 'BAD',
+                'AVSResponse' => 'BAD',
+                'CreditCardNetworkAuthorizationCode' => '585075',
+                'CreditCardAccount' => [
+                    'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
+                    'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
+                    'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
+                    'CVVCode' => '',
+                    'CardType' => $data['creditCardAccount']['CardType'],
+                    'FulfillmentGateway' => null,
+                    'AccountUsePreferenceType' => 'UnSpecified',
+                    'CreditCardBinType' => null
+                ],
+                'Responses' => [
+                    'Response' => [
+                        'ResponseCode' => '1000',
+                        'ErrorMessage' => ''
+                    ]
+                ]
+            ]
+        ];
     }
 }
