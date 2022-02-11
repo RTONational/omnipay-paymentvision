@@ -114,6 +114,12 @@ class CreateBankAccountRequest extends AbstractRequest
         $dateString = date('YmdHis');
         return (object) [
             'AddBankAccountResult' => [
+                'Responses' => [
+                    'Response' => [
+                        'ResponseCode' => '1000',
+                        'ErrorMessage' => ''
+                    ]
+                ],
                 'ReferenceID' => 'C' . $dateString,
                 'TimeReceived' => date('n/j/Y g:i:s A'),
                 'CustomerReferenceCode' => 'CU' . $dateString,
@@ -121,21 +127,15 @@ class CreateBankAccountRequest extends AbstractRequest
                     'ABA' => $data['bankAccount']['ABA'],
                     'AccountNumber' => $data['bankAccount']['AccountNumber'],
                     'AccountType' => $data['bankAccount']['AccountType'],
-                    'AccountOwnerType' => null,
+                    'AccountOwnerType' => '',
                     'BillingAddress' => $data['bankAccount']['BillingAddress'],
                     'CustomBank' => [
-                        'BankName' => null,
-                        'BankCity' => null,
-                        'BankState' => null
+                        'BankName' => '',
+                        'BankCity' => '',
+                        'BankState' => ''
                     ],
                     'CheckMICROption' => $data['bankAccount']['CheckMICROption'],
                     'AccountUsePreferenceType' => $data['bankAccount']['AccountUsePreferenceType']
-                ],
-                'Responses' => [
-                    'Response' => [
-                        'ResponseCode' => '1000',
-                        'ErrorMessage' => ''
-                    ]
                 ]
             ]
         ];
