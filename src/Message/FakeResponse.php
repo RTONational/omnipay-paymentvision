@@ -13,7 +13,7 @@ class FakeResponse extends MessageResponse
      */
     public function getSoapRequest()
     {
-        return class_basename($this->request) . " Stubbed Request:\n" . print_r($this->getRequest()->getData(), true);
+        return class_basename($this->request) . " Stubbed Request Data:\n" . print_r($this->getRequest()->getData(), true);
     }
 
     /**
@@ -23,6 +23,6 @@ class FakeResponse extends MessageResponse
      */
     public function getSoapResponse()
     {
-        return class_basename($this->request) . " Stubbed Response:\n" . print_r($this->getData(), true);
+        return class_basename($this->request) . " Stubbed Response Fake Data:\n" . print_r($this->getData(), true);
     }
 }
