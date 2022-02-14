@@ -53,7 +53,7 @@ class PurchaseRequest extends AbstractRequest
             'HoldForApproval' => $this->getHoldForApproval(),
             'IsRecurring' => $this->getIsRecurring(),
         );
-        
+
         $data['customer'] = array(
             'FirstName' => $card->getFirstName(),
             'LastName' => $card->getLastName(),
@@ -136,7 +136,7 @@ class PurchaseRequest extends AbstractRequest
         if (!$this->soap) {
             $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
         }
-        
+
         $response = call_user_func_array(array($this->soap, 'MakeCreditCardPayment'), array($data));
 
         return $this->response = new Response($this, $response);
@@ -168,7 +168,7 @@ class PurchaseRequest extends AbstractRequest
                 'CreditCardAccount' => [
                     'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
                     'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
-                    'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
+                    'CreditCardExpirationYear' => date('Y', strtotime('+1 year')),
                     'CVVCode' => '',
                     'CardType' => $data['creditCardAccount']['CardType'],
                     'FulfillmentGateway' => null,

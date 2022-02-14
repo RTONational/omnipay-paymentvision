@@ -129,7 +129,7 @@ class ChargeCardRequest extends AbstractRequest
                 'CreditCardAccount' => [
                     'CreditCardNumber' => 'XXXXXXXXXXXX1111',
                     'CreditCardExpirationMonth' => '12',
-                    'CreditCardExpirationYear' => '2023',
+                    'CreditCardExpirationYear' => date('Y', strtotime('+1 year')),
                     'CardType' => 'Visa',
                     'FulfillmentGateway' => '',
                     'AccountUsePreferenceType' => 'MultiUse',

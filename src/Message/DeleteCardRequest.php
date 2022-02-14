@@ -84,7 +84,7 @@ class DeleteCardRequest extends AbstractRequest
                     'CreditCardAccount' => [
                         'CreditCardNumber' => 'XXXXXXXXXXXX1111',
                         'CreditCardExpirationMonth' => '12',
-                        'CreditCardExpirationYear' => '2023',
+                        'CreditCardExpirationYear' => date('Y', strtotime('+1 year')),
                         'CardType' => 'Visa',
                         'BillingAddress' => [
                             'NameOnCard' => 'Testy Tester',
@@ -99,7 +99,6 @@ class DeleteCardRequest extends AbstractRequest
                         'AccountUsePreferenceType' => 'MultiUse',
                         'CreditCardBinType' => '',
                     ],
-
                     'FinancialAccountStatusType' => 'Active',
                     'LastUsed' => '0001-01-01T00:00:00',
                     'LastUpdated' => '0001-01-01T00:00:00',
