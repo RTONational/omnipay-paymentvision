@@ -168,8 +168,8 @@ class PurchaseRequest extends AbstractRequest
                 'CreditCardAccount' => [
                     'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
                     'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
-                    'CreditCardExpirationYear' => date('Y', strtotime('+1 year')),
-                    'CVVCode' => '',
+                    'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
+                    'CVVCode' => $data['creditCardAccount']['CVVCode'],
                     'CardType' => $data['creditCardAccount']['CardType'],
                     'FulfillmentGateway' => null,
                     'AccountUsePreferenceType' => 'UnSpecified',

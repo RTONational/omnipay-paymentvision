@@ -44,14 +44,14 @@ class CreateCardRequest extends AbstractRequest
             'CVVCode' => $card->getCvv(),
             'CardType' => CreditCardHelper::paymentVisionCardType($card->getBrand()),
             'BillingAddress' => array(
-				'NameOnCard' => $this->getNameOnCard(),
-				'AddressLineOne' => $card->getBillingAddress1(),
-				'City' => $card->getBillingCity(),
+                'NameOnCard' => $this->getNameOnCard(),
+                'AddressLineOne' => $card->getBillingAddress1(),
+                'City' => $card->getBillingCity(),
                 'State' => $card->getBillingState(),
                 'ZipCode' => substr($card->getBillingPostcode(), 0, 5),
-				'Phone' => preg_replace("/[^0-9]/", '', $card->getBillingPhone()),
-			),
-			'AccountUsePreferenceType' => 'MultiUse'
+                'Phone' => preg_replace("/[^0-9]/", '', $card->getBillingPhone()),
+            ),
+            'AccountUsePreferenceType' => 'MultiUse'
         );
 
         $data['customer'] = array(
@@ -129,9 +129,9 @@ class CreateCardRequest extends AbstractRequest
                 'CreditCard' => [
                     'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
                     'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
-                    'CreditCardExpirationYear' => date('Y', strtotime('+1 year')),
-                    'CVVCode' => '',
-                    'CardType' => 'Visa',
+                    'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
+                    'CVVCode' => $data['creditCardAccount']['CVVCode'],
+                    'CardType' => $data['creditCardAccount']['CardType'],
                     'BillingAddress' => $data['creditCardAccount']['BillingAddress'],
                     'FulfillmentGateway' => '',
                     'AccountUsePreferenceType' => 'MultiUse',
