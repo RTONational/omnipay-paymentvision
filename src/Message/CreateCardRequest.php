@@ -130,7 +130,7 @@ class CreateCardRequest extends AbstractRequest
                     'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
                     'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
                     'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
-                    'CVVCode' => $data['creditCardAccount']['CVVCode'],
+                    'CVVCode' => '',
                     'CardType' => $data['creditCardAccount']['CardType'],
                     'BillingAddress' => $data['creditCardAccount']['BillingAddress'],
                     'FulfillmentGateway' => '',
