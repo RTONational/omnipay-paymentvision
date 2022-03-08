@@ -3,9 +3,12 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CommonParametersTrait;
 
 class ChargeCardRequest extends AbstractRequest
 {
+    use CommonParametersTrait;
+
     /**
      * SoapClient Class
      */
@@ -14,141 +17,6 @@ class ChargeCardRequest extends AbstractRequest
     public function getSoap()
     {
         return $this->soap;
-    }
-
-    public function getPvLogin()
-    {
-        return $this->getParameter('pvLogin');
-    }
-
-    public function setPvLogin($value)
-    {
-        return $this->setParameter('pvLogin', $value);
-    }
-
-    public function getPvPassword()
-    {
-        return $this->getParameter('pvPassword');
-    }
-
-    public function setPvPassword($value)
-    {
-        return $this->setParameter('pvPassword', $value);
-    }
-
-    public function getPvAPIKey()
-    {
-        return $this->getParameter('pvAPIKey');
-    }
-
-    public function setPvAPIKey($value)
-    {
-        return $this->setParameter('pvAPIKey', $value);
-    }
-
-    public function getPvToken()
-    {
-        return $this->getParameter('pvToken');
-    }
-
-    public function setPvToken($value)
-    {
-        return $this->setParameter('pvToken', $value);
-    }
-
-    public function getReferenceId()
-    {
-        return $this->getParameter('referenceId');
-    }
-
-    public function setReferenceId($value)
-    {
-        return $this->setParameter('referenceId', $value);
-    }
-
-    public function getMerchantPayeeCode()
-    {
-        return $this->getParameter('merchantPayeeCode');
-    }
-
-    public function setMerchantPayeeCode($value)
-    {
-        return $this->setParameter('merchantPayeeCode', $value);
-    }
-
-    public function getComment()
-    {
-        return $this->getParameter('comment');
-    }
-
-    public function setComment($value)
-    {
-        return $this->setParameter('comment', $value);
-    }
-
-    public function getUserDefinedOne()
-    {
-        return $this->getParameter('userDefinedOne');
-    }
-
-    public function setUserDefinedOne($value)
-    {
-        return $this->setParameter('userDefinedOne', $value);
-    }
-
-    public function getHoldForApproval()
-    {
-        return $this->getParameter('holdForApproval');
-    }
-
-    public function setHoldForApproval($value)
-    {
-        return $this->setParameter('holdForApproval', $value);
-    }
-
-    public function getIsRecurring()
-    {
-        return $this->getParameter('isRecurring');
-    }
-
-    public function setIsRecurring($value)
-    {
-        return $this->setParameter('isRecurring', $value);
-    }
-
-    public function getSettlementDate()
-    {
-        return $this->getParameter('settlementDate');
-    }
-
-    public function setSettlementDate($value)
-    {
-        return $this->setParameter('settlementDate', $value);
-    }
-
-    public function getLiveWsdl()
-    {
-        return $this->getParameter('liveWsdl');
-    }
-
-    public function setLiveWsdl($value)
-    {
-        return $this->setParameter('liveWsdl', $value);
-    }
-
-    public function getTestWsdl()
-    {
-        return $this->getParameter('testWsdl');
-    }
-
-    public function setTestWsdl($value)
-    {
-        return $this->setParameter('testWsdl', $value);
-    }
-
-    public function getWsdl()
-    {
-        return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
     /**
@@ -178,9 +46,9 @@ class ChargeCardRequest extends AbstractRequest
             'IsRecurring' => $this->getIsRecurring(),
         );
         if ($settlementDate = $this->getSettlementDate()) {
-			$data['creditCardPayment']['SettlementDate'] = date('m/d/Y', strtotime($settlementDate));
-		}
-        
+            $data['creditCardPayment']['SettlementDate'] = date('m/d/Y', strtotime($settlementDate));
+        }
+
         $data['customer'] = array(
             'FirstName' => $card->getFirstName(),
             'LastName' => $card->getLastName(),
@@ -216,12 +84,58 @@ class ChargeCardRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        if (true === $this->getStubMode()) {
+            $response = $this->getFakeResponse($data);
+            return $this->response = new FakeResponse($this, $response);
+        }
+
         if (!$this->soap) {
             $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
         }
-        
+
         $response = call_user_func_array(array($this->soap, 'MakeIdBasedCreditCardPayment'), array($data));
 
         return $this->response = new Response($this, $response);
+    }
+
+    /**
+     * Get fake response specific to this request
+     *
+     * @param  mixed $data The data that would otherwise be sent
+     * @return object
+     */
+    public function getFakeResponse($data)
+    {
+        $dateString = date('YmdHis');
+        return (object) [
+            'MakeIdBasedCreditCardPaymentResult' => [
+                'Responses' => [
+                    'Response' => [
+                        'ResponseCode' => '1000',
+                        'ErrorMessage' => ''
+                    ]
+                ],
+                'ReferenceID' => $data['referenceID'],
+                'TimeReceived' => date('n/j/Y g:i:s A'),
+                'TransactionStatus' => 'Processed',
+                'CaptureTrackingNumber' => 'API' . $dateString,
+                'TransactionReferenceCode' => 'STUB' . $dateString,
+                'CustomerReferenceCode' => 'CU' . $dateString,
+                'Amount' => $data['creditCardPayment']['Amount'],
+                'PrincipalAmount' => $data['creditCardPayment']['Amount'],
+                'ConvenienceFee' => '0.00',
+                'AVSResponse' => 'BAD',
+                'CreditCardNetworkAuthorizationCode' => '999999',
+                'CreditCardAccount' => [
+                    'CreditCardNumber' => 'XXXXXXXXXXXX1111',
+                    'CreditCardExpirationMonth' => '12',
+                    'CreditCardExpirationYear' => date('Y', strtotime('+1 year')),
+                    'CardType' => 'Visa',
+                    'FulfillmentGateway' => '',
+                    'AccountUsePreferenceType' => 'MultiUse',
+                    'CreditCardBinType' => '',
+                ]
+            ]
+        ];
     }
 }

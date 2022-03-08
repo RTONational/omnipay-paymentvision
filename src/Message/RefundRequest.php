@@ -3,12 +3,15 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CommonParametersTrait;
 
 /**
  * Send a request for partially refunding a transaction
  */
 class RefundRequest extends AbstractRequest
 {
+    use CommonParametersTrait;
+
     /**
      * SoapClient Class
      */
@@ -17,61 +20,6 @@ class RefundRequest extends AbstractRequest
     public function getSoap()
     {
         return $this->soap;
-    }
-
-    public function getSessionId()
-    {
-        return $this->getParameter('sessionId');
-    }
-
-    public function setSessionId($value)
-    {
-        return $this->setParameter('sessionId', $value);
-    }
-
-    public function getTransactionId()
-    {
-        return $this->getParameter('transactionId');
-    }
-
-    public function setTransactionId($value)
-    {
-        return $this->setParameter('transactionId', $value);
-    }
-
-    public function getRefundReason()
-    {
-        return $this->getParameter('refundReason');
-    }
-
-    public function setRefundReason($value)
-    {
-        return $this->setParameter('refundReason', $value);
-    }
-
-    public function getLiveWsdl()
-    {
-        return $this->getParameter('liveWsdl');
-    }
-
-    public function setLiveWsdl($value)
-    {
-        return $this->setParameter('liveWsdl', $value);
-    }
-
-    public function getTestWsdl()
-    {
-        return $this->getParameter('testWsdl');
-    }
-
-    public function setTestWsdl($value)
-    {
-        return $this->setParameter('testWsdl', $value);
-    }
-
-    public function getWsdl()
-    {
-        return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
     /**
@@ -100,12 +48,38 @@ class RefundRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        if (true === $this->getStubMode()) {
+            $response = $this->getFakeResponse($data);
+            return $this->response = new FakeResponse($this, $response);
+        }
+
         if (!$this->soap) {
             $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
         }
-        
+
         $response = call_user_func_array(array($this->soap, 'RefundTransaction'), array($data));
 
         return $this->response = new Response($this, $response);
+    }
+
+    /**
+     * Get fake response specific to this request
+     *
+     * @param  mixed $data The data that would otherwise be sent
+     * @return object
+     */
+    public function getFakeResponse($data)
+    {
+        return (object) [
+            'RefundTransactionResult' => [
+                'Responses' => [
+                    'Response' => [
+                        'ResponseCode' => '1000',
+                        'ErrorMessage' => ''
+                    ]
+                ],
+                'TimeReceived' => date('n/j/Y g:i:s A'),
+            ]
+        ];
     }
 }

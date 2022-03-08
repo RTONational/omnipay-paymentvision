@@ -3,10 +3,13 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\PaymentVision\CommonParametersTrait;
 use Omnipay\PaymentVision\CreditCardHelper;
 
 class PurchaseRequest extends AbstractRequest
 {
+    use CommonParametersTrait;
+
     /**
      * SoapClient Class
      */
@@ -15,121 +18,6 @@ class PurchaseRequest extends AbstractRequest
     public function getSoap()
     {
         return $this->soap;
-    }
-
-    public function getPvLogin()
-    {
-        return $this->getParameter('pvLogin');
-    }
-
-    public function setPvLogin($value)
-    {
-        return $this->setParameter('pvLogin', $value);
-    }
-
-    public function getPvPassword()
-    {
-        return $this->getParameter('pvPassword');
-    }
-
-    public function setPvPassword($value)
-    {
-        return $this->setParameter('pvPassword', $value);
-    }
-
-    public function getPvAPIKey()
-    {
-        return $this->getParameter('pvAPIKey');
-    }
-
-    public function setPvAPIKey($value)
-    {
-        return $this->setParameter('pvAPIKey', $value);
-    }
-
-    public function getPvToken()
-    {
-        return $this->getParameter('pvToken');
-    }
-
-    public function setPvToken($value)
-    {
-        return $this->setParameter('pvToken', $value);
-    }
-
-    public function getMerchantPayeeCode()
-    {
-        return $this->getParameter('merchantPayeeCode');
-    }
-
-    public function setMerchantPayeeCode($value)
-    {
-        return $this->setParameter('merchantPayeeCode', $value);
-    }
-
-    public function getComment()
-    {
-        return $this->getParameter('comment');
-    }
-
-    public function setComment($value)
-    {
-        return $this->setParameter('comment', $value);
-    }
-
-    public function getUserDefinedOne()
-    {
-        return $this->getParameter('userDefinedOne');
-    }
-
-    public function setUserDefinedOne($value)
-    {
-        return $this->setParameter('userDefinedOne', $value);
-    }
-
-    public function getHoldForApproval()
-    {
-        return $this->getParameter('holdForApproval');
-    }
-
-    public function setHoldForApproval($value)
-    {
-        return $this->setParameter('holdForApproval', $value);
-    }
-
-    public function getIsRecurring()
-    {
-        return $this->getParameter('isRecurring');
-    }
-
-    public function setIsRecurring($value)
-    {
-        return $this->setParameter('isRecurring', $value);
-    }
-
-    public function getLiveWsdl()
-    {
-        return $this->getParameter('liveWsdl');
-    }
-
-    public function setLiveWsdl($value)
-    {
-        return $this->setParameter('liveWsdl', $value);
-    }
-
-    public function getTestWsdl()
-    {
-        return $this->getParameter('testWsdl');
-    }
-
-    public function setTestWsdl($value)
-    {
-        return $this->setParameter('testWsdl', $value);
-    }
-
-    public function getWsdl()
-    {
-        return $this->getTestMode() ? $this->getTestWsdl() : $this->getLiveWsdl();
     }
 
     /**
@@ -165,7 +53,7 @@ class PurchaseRequest extends AbstractRequest
             'HoldForApproval' => $this->getHoldForApproval(),
             'IsRecurring' => $this->getIsRecurring(),
         );
-        
+
         $data['customer'] = array(
             'FirstName' => $card->getFirstName(),
             'LastName' => $card->getLastName(),
@@ -240,12 +128,60 @@ class PurchaseRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        if (true === $this->getStubMode()) {
+            $response = $this->getFakeResponse($data);
+            return $this->response = new FakeResponse($this, $response);
+        }
+
         if (!$this->soap) {
             $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
         }
-        
+
         $response = call_user_func_array(array($this->soap, 'MakeCreditCardPayment'), array($data));
 
         return $this->response = new Response($this, $response);
+    }
+
+    /**
+     * Get fake response specific to this request
+     *
+     * @param  mixed $data The data that would otherwise be sent
+     * @return object
+     */
+    public function getFakeResponse($data)
+    {
+        $dateString = date('YmdHis');
+        return (object) [
+            'MakeCreditCardPaymentResult' => [
+                'ReferenceID' => 'C' . $dateString,
+                'TimeReceived' => date('n/j/Y g:i:s A'),
+                'TransactionStatus' => 'Processed',
+                'CaptureTrackingNumber' => 'API' . $dateString,
+                'TransactionReferenceCode' => 'STUB' . $dateString,
+                'CustomerReferenceCode' => 'CU' . $dateString,
+                'Amount' => $data['creditCardPayment']['Amount'],
+                'PrincipalAmount' => $data['creditCardPayment']['Amount'],
+                'ConvenienceFee' => '0.00',
+                'CVVResponse' => 'BAD',
+                'AVSResponse' => 'BAD',
+                'CreditCardNetworkAuthorizationCode' => '585075',
+                'CreditCardAccount' => [
+                    'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
+                    'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
+                    'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
+                    'CVVCode' => '',
+                    'CardType' => $data['creditCardAccount']['CardType'],
+                    'FulfillmentGateway' => null,
+                    'AccountUsePreferenceType' => 'UnSpecified',
+                    'CreditCardBinType' => null
+                ],
+                'Responses' => [
+                    'Response' => [
+                        'ResponseCode' => '1000',
+                        'ErrorMessage' => ''
+                    ]
+                ]
+            ]
+        ];
     }
 }
