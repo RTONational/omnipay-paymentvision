@@ -3,10 +3,10 @@
     "description": "PaymentVision driver for the Omnipay payment processing library",
     "type": "library",
     "require": {
-    	"omnipay/common": "^3.0"
+    	"omnipay/common": "^3.2"
     },
     "require-dev": {
-    	"omnipay/tests": "^3.0"
+    	"omnipay/tests": "^4.1"
     },
     "autoload": {
         "psr-4": {
