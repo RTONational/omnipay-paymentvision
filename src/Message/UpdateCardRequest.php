@@ -108,11 +108,11 @@ class UpdateCardRequest extends AbstractRequest
                         'CreditCardExpirationYear' => date('Y', strtotime('+1 year')),
                         'CardType' => 'Visa',
                         'BillingAddress' => [
-                            'NameOnAccount' => $data['creditCardAccountUpdates']['BillingAddress']['NameOnAccount'],
+                            'NameOnCard' => $data['creditCardAccountUpdates']['BillingAddress']['NameOnCard'],
                             'AddressLineOne' => $data['creditCardAccountUpdates']['BillingAddress']['AddressLineOne'],
                             'City' => $data['creditCardAccountUpdates']['BillingAddress']['City'],
                             'State' => $data['creditCardAccountUpdates']['BillingAddress']['State'],
-                            'Zip' => $data['creditCardAccountUpdates']['BillingAddress']['Zip'],
+                            'ZipCode' => $data['creditCardAccountUpdates']['BillingAddress']['ZipCode'],
                             'Phone' => $data['creditCardAccountUpdates']['BillingAddress']['Phone']
                         ],
                         'FulfillmentGateway' => '',
