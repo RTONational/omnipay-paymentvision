@@ -3,6 +3,22 @@
 namespace Omnipay\PaymentVision;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\PaymentVision\Message\ChargeBankAccountRequest;
+use Omnipay\PaymentVision\Message\ChargeCardRequest;
+use Omnipay\PaymentVision\Message\CreateBankAccountRequest;
+use Omnipay\PaymentVision\Message\CreateCardRequest;
+use Omnipay\PaymentVision\Message\DeleteBankAccountRequest;
+use Omnipay\PaymentVision\Message\DeleteCardRequest;
+use Omnipay\PaymentVision\Message\FinancialAccountsRequest;
+use Omnipay\PaymentVision\Message\LoginRequest;
+use Omnipay\PaymentVision\Message\PurchaseRequest;
+use Omnipay\PaymentVision\Message\PurchaseViaBankRequest;
+use Omnipay\PaymentVision\Message\RefundRequest;
+use Omnipay\PaymentVision\Message\TransactionDetailsRequest;
+use Omnipay\PaymentVision\Message\UpdateBankAccountRequest;
+use Omnipay\PaymentVision\Message\UpdateCardRequest;
+use Omnipay\PaymentVision\Message\UpdateCustomerRequest;
+use Omnipay\PaymentVision\Message\VoidRequest;
 
 /**
  * PaymentVision Gateway Class
@@ -43,7 +59,7 @@ class Gateway extends AbstractGateway
 
     public function login(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\LoginRequest', $parameters);
+        return $this->createRequest(LoginRequest::class, $parameters);
     }
 
     /***
@@ -52,7 +68,7 @@ class Gateway extends AbstractGateway
 
     public function purchaseViaBank(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\PurchaseViaBankRequest', $parameters);
+        return $this->createRequest(PurchaseViaBankRequest::class, $parameters);
     }
 
     /***
@@ -61,22 +77,22 @@ class Gateway extends AbstractGateway
 
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\PurchaseRequest', $parameters);
+        return $this->createRequest(PurchaseRequest::class, $parameters);
     }
 
     public function getTransactionDetails(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\TransactionDetailsRequest', $parameters);
+        return $this->createRequest(TransactionDetailsRequest::class, $parameters);
     }
 
     public function refund(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\RefundRequest', $parameters);
+        return $this->createRequest(RefundRequest::class, $parameters);
     }
 
     public function void(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\VoidRequest', $parameters);
+        return $this->createRequest(VoidRequest::class, $parameters);
     }
 
     /***
@@ -85,22 +101,22 @@ class Gateway extends AbstractGateway
 
     public function createBankAccount(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\CreateBankAccountRequest', $parameters);
+        return $this->createRequest(CreateBankAccountRequest::class, $parameters);
     }
 
     public function updateBankAccount(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\UpdateBankAccountRequest', $parameters);
+        return $this->createRequest(UpdateBankAccountRequest::class, $parameters);
     }
 
     public function deleteBankAccount(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\DeleteBankAccountRequest', $parameters);
+        return $this->createRequest(DeleteBankAccountRequest::class, $parameters);
     }
 
     public function chargeBankAccount(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\ChargeBankAccountRequest', $parameters);
+        return $this->createRequest(ChargeBankAccountRequest::class, $parameters);
     }
 
     /***
@@ -109,27 +125,27 @@ class Gateway extends AbstractGateway
 
     public function createCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\CreateCardRequest', $parameters);
+        return $this->createRequest(CreateCardRequest::class, $parameters);
     }
 
     public function updateCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\UpdateCardRequest', $parameters);
+        return $this->createRequest(UpdateCardRequest::class, $parameters);
     }
 
     public function deleteCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\DeleteCardRequest', $parameters);
+        return $this->createRequest(DeleteCardRequest::class, $parameters);
     }
 
     public function chargeCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\ChargeCardRequest', $parameters);
+        return $this->createRequest(ChargeCardRequest::class, $parameters);
     }
 
     public function financialAccounts(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\FinancialAccountsRequest', $parameters);
+        return $this->createRequest(FinancialAccountsRequest::class, $parameters);
     }
 
     /***
@@ -138,6 +154,6 @@ class Gateway extends AbstractGateway
 
     public function updateCustomer(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentVision\Message\UpdateCustomerRequest', $parameters);
+        return $this->createRequest(UpdateCustomerRequest::class, $parameters);
     }
 }
