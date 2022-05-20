@@ -14,6 +14,7 @@ use Omnipay\PaymentVision\Message\LoginRequest;
 use Omnipay\PaymentVision\Message\PurchaseRequest;
 use Omnipay\PaymentVision\Message\PurchaseViaBankRequest;
 use Omnipay\PaymentVision\Message\RefundRequest;
+use Omnipay\PaymentVision\Message\ReplaceCardRequest;
 use Omnipay\PaymentVision\Message\TransactionDetailsRequest;
 use Omnipay\PaymentVision\Message\UpdateBankAccountRequest;
 use Omnipay\PaymentVision\Message\UpdateCardRequest;
@@ -131,6 +132,11 @@ class Gateway extends AbstractGateway
     public function updateCard(array $parameters = array())
     {
         return $this->createRequest(UpdateCardRequest::class, $parameters);
+    }
+
+    public function replaceCard(array $parameters = array())
+    {
+        return $this->createRequest(ReplaceCardRequest::class, $parameters);
     }
 
     public function deleteCard(array $parameters = array())
