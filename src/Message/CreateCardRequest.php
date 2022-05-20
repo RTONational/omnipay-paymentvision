@@ -2,24 +2,10 @@
 
 namespace Omnipay\PaymentVision\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\PaymentVision\CommonParametersTrait;
 use Omnipay\PaymentVision\CreditCardHelper;
 
 class CreateCardRequest extends AbstractRequest
 {
-    use CommonParametersTrait;
-
-    /**
-     * SoapClient Class
-     */
-    private $soap = null;
-
-    public function getSoap()
-    {
-        return $this->soap;
-    }
-
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.

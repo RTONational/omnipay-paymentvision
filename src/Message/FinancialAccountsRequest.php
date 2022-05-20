@@ -2,26 +2,11 @@
 
 namespace Omnipay\PaymentVision\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\PaymentVision\CommonParametersTrait;
-
 /**
  * Send a request for details of a single transaction specified by transaction reference code
  */
 class FinancialAccountsRequest extends AbstractRequest
 {
-    use CommonParametersTrait;
-
-    /**
-     * SoapClient Class
-     */
-    private $soap = null;
-
-    public function getSoap()
-    {
-        return $this->soap;
-    }
-
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.
