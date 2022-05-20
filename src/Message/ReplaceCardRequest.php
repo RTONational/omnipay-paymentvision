@@ -107,7 +107,7 @@ class ReplaceCardRequest extends AbstractRequest
     {
         $dateString = date('YmdHis');
         return (object) [
-            'UpdateCreditCardAccountResult' => [
+            'ReplaceCreditCardAccountResult' => [
                 'Responses' => [
                     'Response' => [
                         'ResponseCode' => '1000',
