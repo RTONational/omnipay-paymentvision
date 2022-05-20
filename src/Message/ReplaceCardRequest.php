@@ -27,7 +27,7 @@ class ReplaceCardRequest extends AbstractRequest
 
         $data['referenceID'] = $this->getReferenceId();
 
-        // see if this needs to begin lowercase ("creditCardAccount") or not
+        // Does this need to begin lowercase ("creditCardAccount") or not?
         $data['creditCardAccount'] = array(
             'CreditCardNumber' => $card->getNumber(),
             'CreditCardExpirationMonth' => CreditCardHelper::formatExpiryMonth($card->getExpiryMonth()),
@@ -107,26 +107,32 @@ class ReplaceCardRequest extends AbstractRequest
     {
         $dateString = date('YmdHis');
         return (object) [
-            'ReplaceCreditCardAccountResult' => [
+            'UpdateCreditCardAccountResult' => [
                 'Responses' => [
                     'Response' => [
                         'ResponseCode' => '1000',
-                        'ErrorMessage' => '',
+                        'ErrorMessage' => ''
                     ]
                 ],
-                'ReferenceID' => 'C' . $dateString,
                 'TimeReceived' => date('n/j/Y g:i:s A'),
                 'CustomerReferenceCode' => 'CU' . $dateString,
-                'CreditCard' => [
-                    'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
-                    'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
-                    'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
-                    'CVVCode' => '',
-                    'CardType' => $data['creditCardAccount']['CardType'],
-                    'BillingAddress' => $data['creditCardAccount']['BillingAddress'],
-                    'FulfillmentGateway' => '',
-                    'AccountUsePreferenceType' => 'MultiUse',
-                    'CreditCardBinType' => 'Credit',
+                'CreditCardAccountToken' => [
+                    'ReferenceID' => $data['referenceID'],
+                    'CreditCardAccount' => [
+                        'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
+                        'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
+                        'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
+                        // 'CVVCode' => '',
+                        'CardType' => $data['creditCardAccount']['CardType'],
+                        'BillingAddress' => $data['creditCardAccount']['BillingAddress'],
+                        'FulfillmentGateway' => '',
+                        'AccountUsePreferenceType' => 'MultiUse',
+                        'CreditCardBinType' => 'Credit',
+                    ],
+                    'FinancialAccountStatusType' => 'Active',
+                    'LastUsed' => '0001-01-01T00:00:00',
+                    'LastUpdated' => '0001-01-01T00:00:00',
+                    'Created' => '0001-01-01T00:00:00'
                 ]
             ]
         ];
