@@ -117,7 +117,7 @@ class ReplaceCardRequest extends AbstractRequest
                 'TimeReceived' => date('n/j/Y g:i:s A'),
                 'CustomerReferenceCode' => 'CU' . $dateString,
                 'CreditCardAccountToken' => [
-                    'ReferenceID' => $data['referenceID'],
+                    'ReferenceID' => 'C' . $dateString,
                     'CreditCardAccount' => [
                         'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
                         'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
