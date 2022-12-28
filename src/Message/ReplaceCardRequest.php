@@ -4,7 +4,7 @@ namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\PaymentVision\CreditCardHelper;
 
-class CreateCardRequest extends AbstractRequest
+class ReplaceCardRequest extends AbstractRequest
 {
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
@@ -14,7 +14,7 @@ class CreateCardRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('card', 'nameOnCard', 'customerReferenceCode');
+        $this->validate('sessionId', 'referenceId', 'card', 'nameOnCard', 'customerReferenceCode');
         /** @var CreditCard $card */
         $card = $this->getCard();
         $card->validate();
@@ -23,6 +23,11 @@ class CreateCardRequest extends AbstractRequest
 
         $data['authentication'] = $this->getAuthenticationParams();
 
+        $data['sessionID'] = $this->getSessionId();
+
+        $data['referenceID'] = $this->getReferenceId();
+
+        // Does this need to begin lowercase ("creditCardAccount") or not?
         $data['creditCardAccount'] = array(
             'CreditCardNumber' => $card->getNumber(),
             'CreditCardExpirationMonth' => CreditCardHelper::formatExpiryMonth($card->getExpiryMonth()),
@@ -87,7 +92,7 @@ class CreateCardRequest extends AbstractRequest
             $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
         }
 
-        $response = call_user_func_array(array($this->soap, 'AddCreditCardAccount'), array($data));
+        $response = call_user_func_array(array($this->soap, 'ReplaceCreditCardAccount'), array($data));
 
         return $this->response = new Response($this, $response);
     }
@@ -102,26 +107,32 @@ class CreateCardRequest extends AbstractRequest
     {
         $dateString = date('YmdHis');
         return (object) [
-            'AddCreditCardAccountResult' => [
+            'ReplaceCreditCardAccountResult' => [
                 'Responses' => [
                     'Response' => [
                         'ResponseCode' => '1000',
-                        'ErrorMessage' => '',
+                        'ErrorMessage' => ''
                     ]
                 ],
-                'ReferenceID' => 'C' . $dateString,
                 'TimeReceived' => date('n/j/Y g:i:s A'),
                 'CustomerReferenceCode' => 'CU' . $dateString,
-                'CreditCard' => [
-                    'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
-                    'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
-                    'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
-                    'CVVCode' => '',
-                    'CardType' => $data['creditCardAccount']['CardType'],
-                    'BillingAddress' => $data['creditCardAccount']['BillingAddress'],
-                    'FulfillmentGateway' => '',
-                    'AccountUsePreferenceType' => 'MultiUse',
-                    'CreditCardBinType' => 'Credit',
+                'CreditCardAccountToken' => [
+                    'ReferenceID' => 'C' . $dateString,
+                    'CreditCardAccount' => [
+                        'CreditCardNumber' => 'XXXXXXXXXXXX' . substr($data['creditCardAccount']['CreditCardNumber'], -4, 4),
+                        'CreditCardExpirationMonth' => $data['creditCardAccount']['CreditCardExpirationMonth'],
+                        'CreditCardExpirationYear' => $data['creditCardAccount']['CreditCardExpirationYear'],
+                        // 'CVVCode' => '',
+                        'CardType' => $data['creditCardAccount']['CardType'],
+                        'BillingAddress' => $data['creditCardAccount']['BillingAddress'],
+                        'FulfillmentGateway' => '',
+                        'AccountUsePreferenceType' => 'MultiUse',
+                        'CreditCardBinType' => 'Credit',
+                    ],
+                    'FinancialAccountStatusType' => 'Active',
+                    'LastUsed' => '0001-01-01T00:00:00',
+                    'LastUpdated' => '0001-01-01T00:00:00',
+                    'Created' => '0001-01-01T00:00:00'
                 ]
             ]
         ];
