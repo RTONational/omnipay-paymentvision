@@ -65,6 +65,12 @@ class UpdateCustomerRequest extends AbstractRequest
     {
         return (object) [
             'UpdateCustomerInformationResult' => [
+                'Responses' => [
+                    'Response' => [
+                        'ResponseCode' => '1000',
+                        'ErrorMessage' => ''
+                    ]
+                ],
                 'TimeReceived' => date('n/j/Y g:i:s A'),
                 'Customer' => [
                     'CustomerReferenceCode' => $data['customerReferenceCode'],
