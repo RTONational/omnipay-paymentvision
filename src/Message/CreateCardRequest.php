@@ -70,26 +70,9 @@ class CreateCardRequest extends AbstractRequest
         );
     }
 
-    /**
-     * Send the request with specified data
-     *
-     * @param  mixed $data The data to send
-     * @return ResponseInterface
-     */
-    public function sendData($data)
+    public function getRequestName() : string
     {
-        if (true === $this->getStubMode()) {
-            $response = $this->getFakeResponse($data);
-            return $this->response = new FakeResponse($this, $response);
-        }
-
-        if (!$this->soap) {
-            $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
-        }
-
-        $response = call_user_func_array(array($this->soap, 'AddCreditCardAccount'), array($data));
-
-        return $this->response = new Response($this, $response);
+        return 'AddCreditCardAccount';
     }
 
     /**
