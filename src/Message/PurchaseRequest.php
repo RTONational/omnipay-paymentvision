@@ -67,45 +67,6 @@ class PurchaseRequest extends AbstractRequest
         );
     }
 
-    /**
-     * Initialize request with parameters
-     * @param array $parameters The parameters to send
-     */
-    // public function initialize(array $parameters = array())
-    // {
-
-    // }
-
-    /**
-     * Get all request parameters
-     *
-     * @return array
-     */
-    // public function getParameters()
-    // {
-
-    // }
-
-    /**
-     * Get the response to this request (if the request has been sent)
-     *
-     * @return ResponseInterface
-     */
-    // public function getResponse()
-    // {
-
-    // }
-
-    /**
-     * Send the request
-     *
-     * @return ResponseInterface
-     */
-    // public function send()
-    // {
-            // called in AbstractRequest
-    // }
-
     public function getRequestName() : string
     {
         return 'MakeCreditCardPayment';
