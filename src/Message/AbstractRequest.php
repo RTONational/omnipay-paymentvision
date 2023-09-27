@@ -34,10 +34,15 @@ abstract class AbstractRequest extends BaseAbstractRequest
         }
 
         if (!$this->soap) {
-            $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
+            $this->soap = new \SoapClient($this->getWsdl(), [
+                'trace' => $this->getTestMode()
+            ]);
         }
 
-        $responseData = call_user_func_array(array($this->soap, $this->getRequestName()), array($data));
+        $responseData = call_user_func_array(
+            [$this->soap, $this->getRequestName()],
+            [$data]
+        );
 
         return $this->response = $this->makeResponse($responseData);
     }
