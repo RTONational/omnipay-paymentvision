@@ -2,6 +2,7 @@
 
 namespace Omnipay\PaymentVision\Message;
 
+use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\PaymentVision\CreditCardHelper;
 
 class ReplaceCardRequest extends AbstractRequest
@@ -119,5 +120,13 @@ class ReplaceCardRequest extends AbstractRequest
                 ]
             ]
         ];
+    }
+
+    /**
+     * @param mixed $data
+     */
+    protected function makeResponse($data) : ResponseInterface
+    {
+        return new ReplaceCardResponse($this, $data);
     }
 }
