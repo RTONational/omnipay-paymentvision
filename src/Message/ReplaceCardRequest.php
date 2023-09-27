@@ -22,8 +22,6 @@ class ReplaceCardRequest extends AbstractRequest
 
         $data = array();
 
-        $data['authentication'] = $this->getAuthenticationParams();
-
         $data['sessionID'] = $this->getSessionId();
 
         $data['referenceID'] = $this->getReferenceId();
@@ -59,21 +57,6 @@ class ReplaceCardRequest extends AbstractRequest
         $data['merchantPayeeCode'] = $this->getMerchantPayeeCode();
 
         return $data;
-    }
-
-    /**
-     * Get authentication strings
-     *
-     * @return array
-     */
-    private function getAuthenticationParams()
-    {
-        return array(
-            'PvLogin' => $this->getPvLogin(),
-            'PvPassword' => $this->getPvPassword(),
-            'PvAPIKey' => $this->getPvAPIKey(),
-            'PvToken' => $this->getPvToken(),
-        );
     }
 
     public function getRequestName() : string
