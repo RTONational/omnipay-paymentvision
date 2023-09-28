@@ -67,65 +67,9 @@ class PurchaseRequest extends AbstractRequest
         );
     }
 
-    /**
-     * Initialize request with parameters
-     * @param array $parameters The parameters to send
-     */
-    // public function initialize(array $parameters = array())
-    // {
-
-    // }
-
-    /**
-     * Get all request parameters
-     *
-     * @return array
-     */
-    // public function getParameters()
-    // {
-
-    // }
-
-    /**
-     * Get the response to this request (if the request has been sent)
-     *
-     * @return ResponseInterface
-     */
-    // public function getResponse()
-    // {
-
-    // }
-
-    /**
-     * Send the request
-     *
-     * @return ResponseInterface
-     */
-    // public function send()
-    // {
-            // called in AbstractRequest
-    // }
-
-    /**
-     * Send the request with specified data
-     *
-     * @param  mixed $data The data to send
-     * @return ResponseInterface
-     */
-    public function sendData($data)
+    public function getRequestName() : string
     {
-        if (true === $this->getStubMode()) {
-            $response = $this->getFakeResponse($data);
-            return $this->response = new FakeResponse($this, $response);
-        }
-
-        if (!$this->soap) {
-            $this->soap = new \SoapClient($this->getWsdl(), array('trace' => $this->getTestMode()));
-        }
-
-        $response = call_user_func_array(array($this->soap, 'MakeCreditCardPayment'), array($data));
-
-        return $this->response = new Response($this, $response);
+        return 'MakeCreditCardPayment';
     }
 
     /**
