@@ -328,14 +328,4 @@ trait CommonParametersTrait
     {
         return $this->setParameter('newCustomerReferenceCode', $value);
     }
-
-    public function getAvsResponse()
-    {
-        return $this->getParameter('AVSResponse');
-    }
-
-    public function setAvsResponse($value)
-    {
-        return $this->setParameter('AVSResponse', $value);
-    }
 }
