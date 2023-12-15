@@ -134,4 +134,34 @@ class Response extends AbstractResponse
     {
         return $this->request->getSoap()->__getLastResponse();
     }
+
+    /**
+     * AVS Response
+     *
+     * @return null|string
+     */
+    public function getAvsResponse()
+    {
+        // AVSResponse Codes are as follows:
+        // X = Address/9 digit zip match
+        // Y = Address/5 digit zip match
+        // A = Address matches, zip does not
+        // W = Address does not match, 9 digit zip matches
+        // Z = Address does not match, 5 digit zip matches
+        // N = Address/zip do not match
+        // U = Address unavailable
+        // R = Retry (system unavailable or timed out)
+        // E = Error (AVS data invalid)
+        // S = Service not supported
+
+        $avsCode = null;
+
+        array_walk_recursive($this->data, function ($val, $key) use (&$avsCode) {
+            if ($key == 'AVSResponse') {
+                $avsCode = $val;
+            }
+        });
+
+        return $avsCode;
+    }
 }
