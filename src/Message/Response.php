@@ -138,7 +138,7 @@ class Response extends AbstractResponse
     /**
      * AVS Response
      *
-     * @return string
+     * @return null|string
      */
     public function getAvsResponse()
     {
