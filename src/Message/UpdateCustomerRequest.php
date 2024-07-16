@@ -20,7 +20,7 @@ class UpdateCustomerRequest extends AbstractRequest
 
         $data['customerReferenceCode'] = $this->getCustomerReferenceCode();
 
-        $data['customer'] = array(
+        $data['CustomerUpdates'] = array(
             'FirstName' => $this->getFirstName(),
             'LastName' => $this->getLastName(),
             'AdressLineOne' => $this->getBillingAddress1(),
