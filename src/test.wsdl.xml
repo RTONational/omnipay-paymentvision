@@ -7,7 +7,6 @@
     xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.paymentvision.com/API">
-    <script/>
     <wsdl:types>
         <s:schema elementFormDefault="qualified" targetNamespace="http://www.paymentvision.com/API">
             <s:element name="MakeACHPayment">
