@@ -35,7 +35,8 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
         if (!$this->soap) {
             $this->soap = new \SoapClient($this->getWsdl(), [
-                'trace' => $this->getTestMode()
+                'trace' => $this->getTestMode(),
+                'cache_wsdl' => WSDL_CACHE_NONE,
             ]);
         }
 
