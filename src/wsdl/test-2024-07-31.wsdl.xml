@@ -111,7 +111,6 @@
                     <s:element minOccurs="0" maxOccurs="1" name="HomePhone" type="s:string"/>
                     <s:element minOccurs="0" maxOccurs="1" name="WorkPhone" type="s:string"/>
                     <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string"/>
-                    <s:element minOccurs="0" maxOccurs="1" name="Send2FACode" type="s:boolean"/>
                 </s:sequence>
             </s:complexType>
             <s:complexType name="ACHPayment">
