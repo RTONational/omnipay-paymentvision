@@ -45,8 +45,11 @@ class Gateway extends AbstractGateway
             'pvAPIKey' => '',
             'pvToken' => '',
             'merchantPayeeCode' => '',
-            'liveWsdl' => 'https://portal.paymentvision.com/api/api.asmx?wsdl',
-            'testWsdl' => 'https://demo-portal.paymentvision.com/api/api.asmx?wsdl',
+            // 'liveWsdl' => 'https://portal.paymentvision.com/api/api.asmx?wsdl',
+            // 'testWsdl' => 'https://demo-portal.paymentvision.com/api/api.asmx?wsdl',
+            // currently using locally stored WSDL to lock in compatibility
+            'liveWsdl' => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'wsdl' . DIRECTORY_SEPARATOR . '2024-07-31.wsdl.xml',
+            'testWsdl' => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'wsdl' . DIRECTORY_SEPARATOR . 'test-2024-07-31.wsdl.xml',
             'holdForApproval' => false,
             'isRecurring' => false,
             'testMode' => false,
