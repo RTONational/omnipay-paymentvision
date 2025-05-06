@@ -30,7 +30,7 @@ class UpdateBankAccountRequest extends AbstractRequest
                 'City' => $this->getBillingCity(),
                 'State' => $this->getBillingState(),
                 'Zip' => substr($this->getBillingPostcode(), 0, 5),
-                'Phone' => Helpers::stripDigits($this->getBillingPhone()),
+                'Phone' => Helpers::stripNondigits($this->getBillingPhone()),
                 'CustomerReferenceCode' => $this->getCustomerReferenceCode()
             ]),
             'Customer' => array(
