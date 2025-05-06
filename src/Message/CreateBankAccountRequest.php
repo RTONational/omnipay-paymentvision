@@ -22,14 +22,14 @@ class CreateBankAccountRequest extends AbstractRequest
             'AccountType' => $this->getType(),
             'ABA' => $this->getRoutingNumber(),
             'AccountNumber' => $this->getAccountNumber(),
-            'BillingAddress' => array(
+            'BillingAddress' => array_filter([
                 'NameOnAccount' => $this->getNameOnAccount(),
                 'AddressLineOne' => $this->getBillingAddress1(),
                 'City' => $this->getBillingCity(),
                 'State' => $this->getBillingState(),
                 'Zip' => substr($this->getBillingPostcode(), 0, 5),
-                'Phone' => preg_replace("/[^0-9]/", '', $this->getBillingPhone()),
-            ),
+                'Phone' => stripDigits($this->getBillingPhone()),
+            ]),
             'AccountUsePreferenceType' => 'MultiUse',
             'CheckMICROption' => array(
                 'CheckNumberPositionType' => 'RightOfAccount',

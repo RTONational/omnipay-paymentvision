@@ -30,24 +30,24 @@ class PurchaseViaBankRequest extends AbstractRequest
         $data['authentication'] = $this->getAuthenticationParams();
 
         $data['bankAccount'] = array(
-			'AccountType' => $this->getType(),
-			'ABA' => $this->getRoutingNumber(),
-			'AccountNumber' => $this->getAccountNumber(),
-			'BillingAddress' => array(
-				'NameOnAccount' => $this->getNameOnAccount(),
-				'AddressLineOne' => $this->getBillingAddress1(),
-				'City' => $this->getBillingCity(),
-				'State' => $this->getBillingState(),
-				'Zip' => substr($this->getBillingPostcode(), 0, 5),
-				'Phone' => preg_replace("/[^0-9]/", '', $this->getBillingPhone()),
-			),
+            'AccountType' => $this->getType(),
+            'ABA' => $this->getRoutingNumber(),
+            'AccountNumber' => $this->getAccountNumber(),
+            'BillingAddress' => array_filter([
+                'NameOnAccount' => $this->getNameOnAccount(),
+                'AddressLineOne' => $this->getBillingAddress1(),
+                'City' => $this->getBillingCity(),
+                'State' => $this->getBillingState(),
+                'Zip' => substr($this->getBillingPostcode(), 0, 5),
+                'Phone' => stripDigits($this->getBillingPhone()),
+            ]),
             'AccountUsePreferenceType' => 'MultiUse',
             'CheckMICROption' => array(
                 'CheckNumberPositionType' => 'RightOfAccount',
                 'CheckNumberAuxiliaryPositionType' => 'PrependToCheckNumber',
                 'CheckStockType' => 'Business',
             ),
-		);
+        );
 
         $data['achPayment'] = array(
             'Amount' => $this->getAmount(),
@@ -59,8 +59,8 @@ class PurchaseViaBankRequest extends AbstractRequest
             'IsRecurring' => $this->getIsRecurring(),
         );
         if ($settlementDate = $this->getSettlementDate()) {
-			$data['achPayment']['SettlementDate'] = date('m/d/Y', strtotime($settlementDate));
-		}
+            $data['achPayment']['SettlementDate'] = date('m/d/Y', strtotime($settlementDate));
+        }
 
         $data['customer'] = array(
             'FirstName' => $this->getFirstName(),
