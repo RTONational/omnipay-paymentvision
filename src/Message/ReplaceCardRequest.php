@@ -39,7 +39,7 @@ class ReplaceCardRequest extends AbstractRequest
                 'City' => $card->getBillingCity(),
                 'State' => $card->getBillingState(),
                 'ZipCode' => substr($card->getBillingPostcode(), 0, 5),
-                'Phone' => stripDigits($card->getBillingPhone()),
+                'Phone' => Helpers::stripDigits($card->getBillingPhone()),
             ]),
             'AccountUsePreferenceType' => 'MultiUse'
         );

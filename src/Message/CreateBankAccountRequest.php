@@ -2,6 +2,8 @@
 
 namespace Omnipay\PaymentVision\Message;
 
+use Omnipay\PaymentVision\Helpers;
+
 class CreateBankAccountRequest extends AbstractRequest
 {
     /**
@@ -28,7 +30,7 @@ class CreateBankAccountRequest extends AbstractRequest
                 'City' => $this->getBillingCity(),
                 'State' => $this->getBillingState(),
                 'Zip' => substr($this->getBillingPostcode(), 0, 5),
-                'Phone' => stripDigits($this->getBillingPhone()),
+                'Phone' => Helpers::stripDigits($this->getBillingPhone()),
             ]),
             'AccountUsePreferenceType' => 'MultiUse',
             'CheckMICROption' => array(

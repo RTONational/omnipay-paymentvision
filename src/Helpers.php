@@ -1,7 +1,10 @@
 <?php
 
-if (!function_exists('stripDigits')) {
-    function stripDigits(?string $value): ?string
+namespace Omnipay\PaymentVision;
+
+class Helpers
+{
+    public static function stripDigits(?string $value): ?string
     {
         return null === $value
             ? null
