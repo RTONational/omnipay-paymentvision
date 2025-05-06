@@ -3,6 +3,7 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\PaymentVision\CreditCardHelper;
+use Omnipay\PaymentVision\Helpers;
 
 class CreateCardRequest extends AbstractRequest
 {

@@ -2,6 +2,8 @@
 
 namespace Omnipay\PaymentVision\Message;
 
+use Omnipay\PaymentVision\Helpers;
+
 class UpdateBankAccountRequest extends AbstractRequest
 {
     /**

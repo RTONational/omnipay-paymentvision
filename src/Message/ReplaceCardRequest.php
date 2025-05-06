@@ -4,6 +4,7 @@ namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\PaymentVision\CreditCardHelper;
+use Omnipay\PaymentVision\Helpers;
 
 class ReplaceCardRequest extends AbstractRequest
 {
