@@ -2,6 +2,8 @@
 
 namespace Omnipay\PaymentVision\Message;
 
+use Omnipay\PaymentVision\Helpers;
+
 class UpdateCardRequest extends AbstractRequest
 {
     /**
@@ -23,15 +25,15 @@ class UpdateCardRequest extends AbstractRequest
         $data['referenceID'] = $this->getReferenceId();
 
         $data['creditCardAccountUpdates'] = array(
-            'BillingAddress' => array(
+            'BillingAddress' => array_filter([
                 'NameOnCard' => $this->getNameOnCard(),
                 'AddressLineOne' => $card->getBillingAddress1(),
                 'City' => $card->getBillingCity(),
                 'State' => $card->getBillingState(),
                 'ZipCode' => substr($card->getBillingPostcode(), 0, 5),
-                'Phone' => preg_replace("/[^0-9]/", '', $card->getBillingPhone()),
+                'Phone' => Helpers::stripNondigits($card->getBillingPhone()),
                 'CustomerReferenceCode' => $this->getCustomerReferenceCode(),
-            ),
+            ]),
             'Customer' => array(
                 'FirstName' => $card->getFirstName(),
                 'LastName' => $card->getLastName(),

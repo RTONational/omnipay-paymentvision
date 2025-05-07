@@ -2,6 +2,8 @@
 
 namespace Omnipay\PaymentVision\Message;
 
+use Omnipay\PaymentVision\Helpers;
+
 class UpdateBankAccountRequest extends AbstractRequest
 {
     /**
@@ -22,15 +24,15 @@ class UpdateBankAccountRequest extends AbstractRequest
 
         $data['bankAccountUpdates'] = array(
             'AccountType' => $this->getType(),
-            'BillingAddress' => array(
+            'BillingAddress' => array_filter([
                 'NameOnAccount' => $this->getNameOnAccount(),
                 'AddressLineOne' => $this->getBillingAddress1(),
                 'City' => $this->getBillingCity(),
                 'State' => $this->getBillingState(),
                 'Zip' => substr($this->getBillingPostcode(), 0, 5),
-                'Phone' => preg_replace("/[^0-9]/", '', $this->getBillingPhone()),
+                'Phone' => Helpers::stripNondigits($this->getBillingPhone()),
                 'CustomerReferenceCode' => $this->getCustomerReferenceCode()
-            ),
+            ]),
             'Customer' => array(
                 'FirstName' => $this->getFirstName(),
                 'LastName' => $this->getLastName(),

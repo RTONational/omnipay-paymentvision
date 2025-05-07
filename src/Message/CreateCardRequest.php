@@ -3,6 +3,7 @@
 namespace Omnipay\PaymentVision\Message;
 
 use Omnipay\PaymentVision\CreditCardHelper;
+use Omnipay\PaymentVision\Helpers;
 
 class CreateCardRequest extends AbstractRequest
 {
@@ -29,14 +30,14 @@ class CreateCardRequest extends AbstractRequest
             'CreditCardExpirationYear' => $card->getExpiryYear(),
             'CVVCode' => $card->getCvv(),
             'CardType' => CreditCardHelper::paymentVisionCardType($card->getBrand()),
-            'BillingAddress' => array(
+            'BillingAddress' => array_filter([
                 'NameOnCard' => $this->getNameOnCard(),
                 'AddressLineOne' => $card->getBillingAddress1(),
                 'City' => $card->getBillingCity(),
                 'State' => $card->getBillingState(),
                 'ZipCode' => substr($card->getBillingPostcode(), 0, 5),
-                'Phone' => preg_replace("/[^0-9]/", '', $card->getBillingPhone()),
-            ),
+                'Phone' => Helpers::stripNondigits($card->getBillingPhone()),
+            ]),
             'AccountUsePreferenceType' => 'MultiUse'
         );
 
